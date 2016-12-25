@@ -30,7 +30,7 @@
 		<link>
 			<name>lib</name>
 			<type>2</type>
-			<location>C:/Users/michp/Desktop/Dron/IMU/lib</location>
+			<locationURI>PARENT-1-PROJECT_LOC/IMU/lib</locationURI>
 		</link>
 		<link>
 			<name>inc/ESP8266_UDP.h</name>
@@ -55,7 +55,7 @@
 		<link>
 			<name>inc/invensense</name>
 			<type>2</type>
-			<location>C:/Users/michp/Desktop/Dron/IMU/inc/invensense</location>
+			<locationURI>PARENT-1-PROJECT_LOC/IMU/inc/invensense</locationURI>
 		</link>
 		<link>
 			<name>src/ESP8266_UDP.cpp</name>
@@ -80,7 +80,7 @@
 		<link>
 			<name>src/invensense</name>
 			<type>2</type>
-			<location>C:/Users/michp/Desktop/Dron/IMU/src/invensense</location>
+			<locationURI>PARENT-1-PROJECT_LOC/IMU/src/invensense</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
