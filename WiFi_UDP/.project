@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>WiFi_UDP</name>
+	<comment></comment>
+	<projects>
+		<project>nucleo-f446re_hal_lib</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
+			<triggers>full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
+		<nature>fr.ac6.mcu.ide.core.MCUProjectNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>inc/LEDs.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LEDs/inc/LEDs.h</locationURI>
+		</link>
+		<link>
+			<name>src/LEDs.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LEDs/src/LEDs.cpp</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>
