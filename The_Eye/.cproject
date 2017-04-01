@@ -58,15 +58,15 @@
 								<option id="fr.ac6.managedbuild.gnu.cpp.compiler.option.optimization.level.1374501740" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.1490071610" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.65817795" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WiFi_UDP/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Logger/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WiFi/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/GPS/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LEDs/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Barometer/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PWM/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IMU/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib/CMSIS/core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib/CMSIS/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib/HAL_Driver/Inc/Legacy}&quot;"/>
