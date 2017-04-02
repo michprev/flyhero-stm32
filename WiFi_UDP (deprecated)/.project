@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>WiFi_UDP</name>
+	<name>WiFi_UDP (deprecated)</name>
 	<comment></comment>
 	<projects>
 		<project>nucleo-f446re_hal_lib</project>
@@ -26,16 +26,4 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>fr.ac6.mcu.ide.core.MCUProjectNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>inc/LEDs.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/LEDs/inc/LEDs.h</locationURI>
-		</link>
-		<link>
-			<name>src/LEDs.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/LEDs/src/LEDs.cpp</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>
