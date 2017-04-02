@@ -33,9 +33,24 @@
 			<locationURI>PARENT-1-PROJECT_LOC/IMU/lib</locationURI>
 		</link>
 		<link>
+			<name>inc/ESP.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/inc/ESP.h</locationURI>
+		</link>
+		<link>
 			<name>inc/ESP32.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/WiFi/inc/ESP32.h</locationURI>
+		</link>
+		<link>
+			<name>inc/ESP8266.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/inc/ESP8266.h</locationURI>
+		</link>
+		<link>
+			<name>inc/ESP_Connection.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/inc/ESP_Connection.h</locationURI>
 		</link>
 		<link>
 			<name>inc/HTTP_Server.h</name>
@@ -73,19 +88,29 @@
 			<locationURI>PARENT-1-PROJECT_LOC/PWM/inc/PWM_Generator.h</locationURI>
 		</link>
 		<link>
-			<name>inc/TCP_Connection.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/WiFi/inc/TCP_Connection.h</locationURI>
-		</link>
-		<link>
 			<name>inc/invensense</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/IMU/inc/invensense</locationURI>
 		</link>
 		<link>
+			<name>src/ESP.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/src/ESP.cpp</locationURI>
+		</link>
+		<link>
 			<name>src/ESP32.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/WiFi/src/ESP32.cpp</locationURI>
+		</link>
+		<link>
+			<name>src/ESP8266.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/src/ESP8266.cpp</locationURI>
+		</link>
+		<link>
+			<name>src/ESP_Connection.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/src/ESP_Connection.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/HTTP_Server.cpp</name>
@@ -121,11 +146,6 @@
 			<name>src/PWM_Generator.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/PWM/src/PWM_Generator.cpp</locationURI>
-		</link>
-		<link>
-			<name>src/TCP_Connection.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/WiFi/src/TCP_Connection.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/invensense</name>
