@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>IMU</name>
+	<name>IMU (deprecated)</name>
 	<comment></comment>
 	<projects>
 		<project>nucleo-f446re_hal_lib</project>
