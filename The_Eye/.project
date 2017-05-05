@@ -68,9 +68,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Logger/inc/Logger.h</locationURI>
 		</link>
 		<link>
-			<name>inc/MPU9250.h</name>
+			<name>inc/MPU6050.h</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/IMU/inc/MPU9250.h</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/IMU/inc/MPU6050.h</locationURI>
 		</link>
 		<link>
 			<name>inc/MS5611.h</name>
@@ -128,9 +128,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Logger/src/Logger.cpp</locationURI>
 		</link>
 		<link>
-			<name>src/MPU9250.cpp</name>
+			<name>src/MPU6050.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/IMU/src/MPU9250.cpp</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/IMU/src/MPU6050.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/MS5611.cpp</name>

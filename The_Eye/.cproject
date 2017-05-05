@@ -38,7 +38,7 @@
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1105505475" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="STM32F446RETx"/>
-									<listOptionValue builtIn="false" value="MPU9250=MPU9250"/>
+									<listOptionValue builtIn="false" value="MPU6050=MPU6050"/>
 									<listOptionValue builtIn="false" value="EMPL_TARGET_STM32F4"/>
 									<listOptionValue builtIn="false" value="USE_DMP"/>
 									<listOptionValue builtIn="false" value="EMPL"/>
