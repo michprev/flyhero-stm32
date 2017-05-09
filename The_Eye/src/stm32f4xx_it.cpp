@@ -46,9 +46,13 @@ extern "C" {
 		while (true);
 	}
 
+	/* MPU6050 data ready */
+
 	void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		mpu->dataReady = true;
 	}
+
+	/* -- MPU6050 data ready -- */
 
 	/* ESP USART3 */
 
@@ -67,7 +71,7 @@ extern "C" {
 		HAL_UART_IRQHandler(esp->Get_UART_Handle());
 	}
 
-	/*              */
+	/* -- ESP USART3 -- */
 
 	void DMA2_Stream2_IRQHandler(void)
 	{
@@ -83,5 +87,37 @@ extern "C" {
 	{
 		HAL_UART_IRQHandler(&logger->huart);
 	}
+
+	/* HAL TIM5 timer */
+
+	void TIM5_IRQHandler(void)
+	{
+		TIM_HandleTypeDef *htim5 = Timer::Get_Handle();
+
+		// Channel 2 for HAL 1 ms tick
+		if (__HAL_TIM_GET_ITSTATUS(htim5, TIM_IT_CC2) == SET) {
+			__HAL_TIM_CLEAR_IT(htim5, TIM_IT_CC2);
+			uint32_t val = __HAL_TIM_GetCounter(htim5);
+			//if ((val - prev) >= 1000) {
+				HAL_IncTick();
+				// Prepare next interrupt
+				__HAL_TIM_SetCompare(htim5, TIM_CHANNEL_2, val + 1000);
+				//prev = val;
+			//}
+			//else {
+			//	printf("should not happen\n");
+			//}
+		}
+		//HAL_TIM_IRQHandler(Timer::Get_Handle());
+	}
+
+	/*void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+	{
+		if (htim->Instance == TIM5) {
+			HAL_IncTick();
+		}
+	}*/
+
+	/* -- HAL TIM5 timer --  */
 
 }
