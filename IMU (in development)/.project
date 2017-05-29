@@ -33,9 +33,19 @@
 			<locationURI>PARENT-1-PROJECT_LOC/LEDs/inc/LEDs.h</locationURI>
 		</link>
 		<link>
+			<name>inc/Timer.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/inc/Timer.h</locationURI>
+		</link>
+		<link>
 			<name>src/LEDs.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/LEDs/src/LEDs.cpp</locationURI>
+		</link>
+		<link>
+			<name>src/Timer.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/src/Timer.cpp</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
