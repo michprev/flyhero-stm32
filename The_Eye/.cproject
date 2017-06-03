@@ -65,7 +65,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LEDs/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Barometer/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PWM/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IMU/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IMU (in development)/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib/CMSIS/core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib/CMSIS/device}&quot;"/>

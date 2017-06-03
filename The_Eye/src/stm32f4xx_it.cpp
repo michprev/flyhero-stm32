@@ -48,8 +48,23 @@ extern "C" {
 
 	/* MPU6050 data ready */
 
+
+	void EXTI1_IRQHandler(void)
+	{
+		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
+	}
+
 	void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-		mpu->dataReady = true;
+		mpu->Data_Ready_Callback();
+	}
+
+	void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
+		mpu->Data_Read_Callback();
+	}
+
+	void I2C1_EV_IRQHandler(void)
+	{
+		HAL_I2C_EV_IRQHandler(mpu->Get_I2C_Handle());
 	}
 
 	/* -- MPU6050 data ready -- */
