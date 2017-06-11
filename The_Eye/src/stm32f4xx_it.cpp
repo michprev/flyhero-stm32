@@ -48,6 +48,10 @@ extern "C" {
 
 	/* MPU6050 data ready */
 
+	void DMA1_Stream5_IRQHandler(void)
+	{
+		HAL_DMA_IRQHandler(mpu->Get_DMA_Rx_Handle());
+	}
 
 	void EXTI1_IRQHandler(void)
 	{
