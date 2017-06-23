@@ -28,11 +28,6 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>lib</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/IMU/lib</locationURI>
-		</link>
-		<link>
 			<name>inc/ESP.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/WiFi/inc/ESP.h</locationURI>

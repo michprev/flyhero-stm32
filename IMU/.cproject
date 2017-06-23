@@ -80,11 +80,9 @@
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.441274500" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.paths.548075069" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib/Debug}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib}&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1627469527" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="nucleo-f446re_hal_lib"/>
-									<listOptionValue builtIn="false" value="libmplmpu"/>
 								</option>
 								<option id="gnu.cpp.link.option.flags.1868584798" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="-u _printf_float -specs=nosys.specs -specs=nano.specs -specs=rdimon.specs -lc -lrdimon" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1040347052" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
