@@ -28,6 +28,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>inc/Biquad_Filter.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/inc/Biquad_Filter.h</locationURI>
+		</link>
+		<link>
 			<name>inc/LEDs.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/LEDs/inc/LEDs.h</locationURI>
@@ -41,6 +46,11 @@
 			<name>inc/Timer.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/inc/Timer.h</locationURI>
+		</link>
+		<link>
+			<name>src/Biquad_Filter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/src/Biquad_Filter.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/LEDs.cpp</name>
