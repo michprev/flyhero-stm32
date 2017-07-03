@@ -57,6 +57,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/The_Eye/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LEDs/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Logger/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WiFi/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib/CMSIS/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib/HAL_Driver/Inc/Legacy}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/nucleo-f446re_hal_lib/HAL_Driver/Inc}&quot;"/>

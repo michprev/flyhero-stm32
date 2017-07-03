@@ -28,16 +28,6 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>inc/Biquad_Filter.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/inc/Biquad_Filter.h</locationURI>
-		</link>
-		<link>
-			<name>inc/LEDs.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/LEDs/inc/LEDs.h</locationURI>
-		</link>
-		<link>
 			<name>inc/Logger.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Logger/inc/Logger.h</locationURI>
@@ -48,16 +38,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/inc/Timer.h</locationURI>
 		</link>
 		<link>
-			<name>src/Biquad_Filter.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/src/Biquad_Filter.cpp</locationURI>
-		</link>
-		<link>
-			<name>src/LEDs.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/LEDs/src/LEDs.cpp</locationURI>
-		</link>
-		<link>
 			<name>src/Logger.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Logger/src/Logger.cpp</locationURI>
@@ -66,6 +46,76 @@
 			<name>src/Timer.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/src/Timer.cpp</locationURI>
+		</link>
+		<link>
+			<name>inc/Biquad_Filter.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/inc/Biquad_Filter.h</locationURI>
+		</link>
+		<link>
+			<name>src/Biquad_Filter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/src/Biquad_Filter.cpp</locationURI>
+		</link>
+		<link>
+			<name>inc/MPU6050.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/IMU/inc/MPU6050.h</locationURI>
+		</link>
+		<link>
+			<name>src/MPU6050.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/IMU/src/MPU6050.cpp</locationURI>
+		</link>
+		<link>
+			<name>inc/LEDs.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LEDs/inc/LEDs.h</locationURI>
+		</link>
+		<link>
+			<name>src/LEDs.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LEDs/src/LEDs.cpp</locationURI>
+		</link>
+		<link>
+			<name>inc/ESP.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/inc/ESP.h</locationURI>
+		</link>
+		<link>
+			<name>src/ESP.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/src/ESP.cpp</locationURI>
+		</link>
+		<link>
+			<name>inc/ESP8266.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/inc/ESP8266.h</locationURI>
+		</link>
+		<link>
+			<name>src/ESP8266.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/src/ESP8266.cpp</locationURI>
+		</link>
+		<link>
+			<name>inc/ESP32.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/inc/ESP32.h</locationURI>
+		</link>
+		<link>
+			<name>src/ESP32.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/src/ESP32.cpp</locationURI>
+		</link>
+		<link>
+			<name>inc/ESP_Connection.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/inc/ESP_Connection.h</locationURI>
+		</link>
+		<link>
+			<name>src/ESP_Connection.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/WiFi/src/ESP_Connection.cpp</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
