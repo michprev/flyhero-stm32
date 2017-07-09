@@ -249,16 +249,16 @@ int main(void)
 
 			// not sure about yaw signs
 			if (!inverse_yaw) {
-				FL = throttle + rollCorrection + pitchCorrection + yawCorrection; // PB2
-				BL = throttle + rollCorrection - pitchCorrection - yawCorrection; // PA15
-				FR = throttle - rollCorrection + pitchCorrection - yawCorrection; // PB10
-				BR = throttle - rollCorrection - pitchCorrection + yawCorrection; // PA1
+				FL = throttle + rollCorrection + yawCorrection; // PB2
+				BL = throttle - pitchCorrection - yawCorrection; // PA15
+				FR = throttle + pitchCorrection - yawCorrection; // PB10
+				BR = throttle - rollCorrection + yawCorrection; // PA1
 			}
 			else {
-				FL = throttle + rollCorrection + pitchCorrection - yawCorrection; // PB2
-				BL = throttle + rollCorrection - pitchCorrection + yawCorrection; // PA15
-				FR = throttle - rollCorrection + pitchCorrection + yawCorrection; // PB10
-				BR = throttle - rollCorrection - pitchCorrection - yawCorrection; // PA1
+				FL = throttle + rollCorrection - yawCorrection; // PB2
+				BL = throttle - pitchCorrection + yawCorrection; // PA15
+				FR = throttle + pitchCorrection + yawCorrection; // PB10
+				BR = throttle - rollCorrection - yawCorrection; // PA1
 			}
 
 			if (FL > 2000)
