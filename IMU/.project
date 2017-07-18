@@ -107,5 +107,35 @@
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/WiFi/src/ESP_Connection.cpp</locationURI>
 		</link>
+		<link>
+			<name>inc/Motors_Controller.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/inc/Motors_Controller.h</locationURI>
+		</link>
+		<link>
+			<name>src/Motors_Controller.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/src/Motors_Controller.cpp</locationURI>
+		</link>
+		<link>
+			<name>inc/PWM_Generator.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/PWM/inc/PWM_Generator.h</locationURI>
+		</link>
+		<link>
+			<name>src/PWM_Generator.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/PWM/src/PWM_Generator.cpp</locationURI>
+		</link>
+		<link>
+			<name>inc/PID.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/inc/PID.h</locationURI>
+		</link>
+		<link>
+			<name>src/PID.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/The_Eye/src/PID.cpp</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
