@@ -743,6 +743,15 @@ void MPU6050::Reset_Integrators() {
 	this->roll = 0;
 	this->pitch = 0;
 	this->yaw = 0;
+
+	this->mahony_integral.x = 0;
+	this->mahony_integral.y = 0;
+	this->mahony_integral.z = 0;
+
+	this->quaternion.q0 = 1;
+	this->quaternion.q1 = 0;
+	this->quaternion.q2 = 0;
+	this->quaternion.q3 = 0;
 }
 
 // approx. using http://nghiaho.com/?p=997
