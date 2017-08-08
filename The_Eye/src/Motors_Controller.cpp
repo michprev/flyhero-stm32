@@ -66,6 +66,11 @@ void Motors_Controller::Update_Motors() {
 
 		MPU6050::Instance().Get_Euler(euler_data.x, euler_data.y, euler_data.z);
 
+		// consider more then 70 deg unsafe, also prevents gimbal lock
+		if (std::fabs(euler_data.x) > 70 || std::fabs(euler_data.y) > 70) {
+			while (true);
+		}
+
 		roll_correction = this->roll_PID.Get_PID(0 - euler_data.x);
 		pitch_correction = this->pitch_PID.Get_PID(0 - euler_data.y);
 		yaw_correction = this->yaw_PID.Get_PID(0 - euler_data.z);
