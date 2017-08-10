@@ -6,35 +6,9 @@
  */
 
 #include <MPU6050.h>
+#include "Config.h"
 
 namespace flyhero {
-
-extern "C" {
-	void DMA1_Stream5_IRQHandler(void)
-	{
-		HAL_DMA_IRQHandler(MPU6050::Instance().Get_DMA_Rx_Handle());
-	}
-
-	void EXTI1_IRQHandler(void)
-	{
-		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
-	}
-
-	void I2C1_EV_IRQHandler(void)
-	{
-		HAL_I2C_EV_IRQHandler(MPU6050::Instance().Get_I2C_Handle());
-	}
-
-	void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
-		if (MPU6050::Instance().Data_Read_Callback != NULL)
-			MPU6050::Instance().Data_Read_Callback();
-	}
-
-	void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-		if (MPU6050::Instance().Data_Ready_Callback != NULL)
-			MPU6050::Instance().Data_Ready_Callback();
-	}
-}
 
 MPU6050& MPU6050::Instance() {
 	static MPU6050 instance;
@@ -90,88 +64,206 @@ void MPU6050::i2c_reset_bus() {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	// 1. Disable the I2C peripheral by clearing the PE bit in I2Cx_CR1 register
-	I2C1->CR1 &= ~(0x0001);
+	IMU_I2C->CR1 &= ~(0x0001);
 
 	// 2. Configure the SCL and SDA I/Os as General Purpose Output Open-Drain, High level (Write 1 to GPIOx_ODR)
-	GPIO_InitStructure.Mode         = GPIO_MODE_OUTPUT_OD;
-	GPIO_InitStructure.Pull         = GPIO_PULLUP;
-	GPIO_InitStructure.Speed        = GPIO_SPEED_FREQ_HIGH;
+	GPIO_InitStructure.Mode         	= GPIO_MODE_OUTPUT_OD;
+	GPIO_InitStructure.Pull         	= GPIO_PULLUP;
+	GPIO_InitStructure.Speed        	= GPIO_SPEED_FREQ_HIGH;
 
-	GPIO_InitStructure.Pin			= GPIO_PIN_8;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
+	GPIO_InitStructure.Pin				= IMU_SCL_PIN;
+	HAL_GPIO_Init(IMU_SCL_BASE, &GPIO_InitStructure);
+	HAL_GPIO_WritePin(IMU_SCL_BASE, IMU_SCL_PIN, GPIO_PIN_SET);
 
-	GPIO_InitStructure.Pin			= GPIO_PIN_9;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
+	GPIO_InitStructure.Pin				= IMU_SDA_PIN;
+	HAL_GPIO_Init(IMU_SDA_BASE, &GPIO_InitStructure);
+	HAL_GPIO_WritePin(IMU_SDA_BASE, IMU_SDA_PIN, GPIO_PIN_SET);
 
 	// 3. Check SCL and SDA High level in GPIOx_IDR
-	while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8) != GPIO_PIN_SET &&
-			HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9) != GPIO_PIN_SET) {
+	while (HAL_GPIO_ReadPin(IMU_SCL_BASE, IMU_SCL_PIN) != GPIO_PIN_SET &&
+			HAL_GPIO_ReadPin(IMU_SDA_BASE, IMU_SDA_PIN) != GPIO_PIN_SET) {
 	}
 
 	// 4. Configure the SDA I/O as General Purpose Output Open-Drain, Low level (Write 0 to GPIOx_ODR)
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(IMU_SDA_BASE, IMU_SDA_PIN, GPIO_PIN_RESET);
 
 	// 5. Check SDA Low level in GPIOx_IDR
-	while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9) != GPIO_PIN_RESET) {
+	while (HAL_GPIO_ReadPin(IMU_SDA_BASE, IMU_SDA_PIN) != GPIO_PIN_RESET) {
 	}
 
 	// 6. Configure the SCL I/O as General Purpose Output Open-Drain, Low level (Write 0 to GPIOx_ODR)
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(IMU_SCL_BASE, IMU_SCL_PIN, GPIO_PIN_RESET);
 
 	// 7. Check SCL Low level in GPIOx_IDR
-	while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8) != GPIO_PIN_RESET) {
+	while (HAL_GPIO_ReadPin(IMU_SCL_BASE, IMU_SCL_PIN) != GPIO_PIN_RESET) {
 	}
 
 	// 8. Configure the SCL I/O as General Purpose Output Open-Drain, High level (Write 1 to GPIOx_ODR)
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(IMU_SCL_BASE, IMU_SCL_PIN, GPIO_PIN_SET);
 
 	// 9. Check SCL High level in GPIOx_IDR
-	while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8) != GPIO_PIN_SET) {
+	while (HAL_GPIO_ReadPin(IMU_SCL_BASE, IMU_SCL_PIN) != GPIO_PIN_SET) {
 	}
 
 	// 10. Configure the SDA I/O as General Purpose Output Open-Drain , High level (Write 1 to GPIOx_ODR)
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(IMU_SDA_BASE, IMU_SDA_PIN, GPIO_PIN_SET);
 
 	// 11. Check SDA High level in GPIOx_IDR
 	// this one never worked so just skip it
-	/*while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9) != GPIO_PIN_SET) {
+	/*while (HAL_GPIO_ReadPin(IMU_SDA_BASE, IMU_SDA_PIN) != GPIO_PIN_SET) {
 	}*/
 
 	// 12. Configure the SCL and SDA I/Os as Alternate function Open-Drain
-	GPIO_InitStructure.Mode         = GPIO_MODE_AF_OD;
-	GPIO_InitStructure.Alternate    = GPIO_AF4_I2C1;
+	switch (uint32_t(IMU_I2C)) {
+	case I2C1_BASE:
+		GPIO_InitStructure.Alternate    = GPIO_AF4_I2C1;
+		break;
+	case I2C2_BASE:
+		GPIO_InitStructure.Alternate	= GPIO_AF4_I2C2;
+		break;
+	case I2C3_BASE:
+		GPIO_InitStructure.Alternate	= GPIO_AF4_I2C3;
+		break;
+	}
 
-	GPIO_InitStructure.Pin          = GPIO_PIN_8;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_InitStructure.Mode         	= GPIO_MODE_AF_OD;
 
-	GPIO_InitStructure.Pin          = GPIO_PIN_9;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_InitStructure.Pin          	= IMU_SCL_PIN;
+	HAL_GPIO_Init(IMU_SCL_BASE, &GPIO_InitStructure);
+
+	GPIO_InitStructure.Pin          	= IMU_SDA_PIN;
+	HAL_GPIO_Init(IMU_SDA_BASE, &GPIO_InitStructure);
 
 	// 13. Set SWRST bit in I2Cx_CR1 register
-	I2C1->CR1 |= 0x8000;
+	IMU_I2C->CR1 |= 0x8000;
 
 	asm("nop");
 
 	// 14. Clear SWRST bit in I2Cx_CR1 register
-	I2C1->CR1 &= ~(0x8000);
+	IMU_I2C->CR1 &= ~(0x8000);
 
 	// 15. Enable the I2C peripheral by setting the PE bit in I2Cx_CR1 register
-	I2C1->CR1 |= 0x0001;
+	IMU_I2C->CR1 |= 0x0001;
 }
 
 HAL_StatusTypeDef MPU6050::i2c_init() {
-	if (__GPIOB_IS_CLK_DISABLED())
-		__GPIOB_CLK_ENABLE();
-	if (__I2C1_IS_CLK_DISABLED())
-		__I2C1_CLK_ENABLE();
-	if (__DMA1_IS_CLK_DISABLED())
-		__DMA1_CLK_ENABLE();
+	// enable SCL GPIO base clock
+	switch ((uint32_t)IMU_SCL_BASE) {
+	case GPIOA_BASE:
+		if (__GPIOA_IS_CLK_DISABLED())
+			__GPIOA_CLK_ENABLE();
+		break;
+	case GPIOB_BASE:
+		if (__GPIOB_IS_CLK_DISABLED())
+			__GPIOB_CLK_ENABLE();
+		break;
+	case GPIOC_BASE:
+		if (__GPIOC_IS_CLK_DISABLED())
+			__GPIOC_CLK_ENABLE();
+		break;
+	case GPIOD_BASE:
+		if (__GPIOD_IS_CLK_DISABLED())
+			__GPIOD_CLK_ENABLE();
+		break;
+	case GPIOE_BASE:
+		if (__GPIOE_IS_CLK_DISABLED())
+			__GPIOE_CLK_ENABLE();
+		break;
+	case GPIOF_BASE:
+		if (__GPIOF_IS_CLK_DISABLED())
+			__GPIOF_CLK_ENABLE();
+		break;
+	case GPIOG_BASE:
+		if (__GPIOG_IS_CLK_DISABLED())
+			__GPIOG_CLK_ENABLE();
+		break;
+	case GPIOH_BASE:
+		if (__GPIOH_IS_CLK_DISABLED())
+			__GPIOH_CLK_ENABLE();
+		break;
+	}
+
+	// enable SDA GPIO base clock
+	switch ((uint32_t)IMU_SDA_BASE) {
+	case GPIOA_BASE:
+		if (__GPIOA_IS_CLK_DISABLED())
+			__GPIOA_CLK_ENABLE();
+		break;
+	case GPIOB_BASE:
+		if (__GPIOB_IS_CLK_DISABLED())
+			__GPIOB_CLK_ENABLE();
+		break;
+	case GPIOC_BASE:
+		if (__GPIOC_IS_CLK_DISABLED())
+			__GPIOC_CLK_ENABLE();
+		break;
+	case GPIOD_BASE:
+		if (__GPIOD_IS_CLK_DISABLED())
+			__GPIOD_CLK_ENABLE();
+		break;
+	case GPIOE_BASE:
+		if (__GPIOE_IS_CLK_DISABLED())
+			__GPIOE_CLK_ENABLE();
+		break;
+	case GPIOF_BASE:
+		if (__GPIOF_IS_CLK_DISABLED())
+			__GPIOF_CLK_ENABLE();
+		break;
+	case GPIOG_BASE:
+		if (__GPIOG_IS_CLK_DISABLED())
+			__GPIOG_CLK_ENABLE();
+		break;
+	case GPIOH_BASE:
+		if (__GPIOH_IS_CLK_DISABLED())
+			__GPIOH_CLK_ENABLE();
+		break;
+	}
+
+	// enable I2C clock
+	switch ((uint32_t)IMU_I2C) {
+	case I2C1_BASE:
+		if (__I2C1_IS_CLK_DISABLED())
+			__I2C1_CLK_ENABLE();
+		break;
+	case I2C2_BASE:
+		if (__I2C2_IS_CLK_DISABLED())
+			__I2C2_CLK_ENABLE();
+		break;
+	case I2C3_BASE:
+		if (__I2C3_IS_CLK_DISABLED())
+			__I2C3_CLK_ENABLE();
+		break;
+	}
+
+	// enable DMA clock
+	switch ((uint32_t)IMU_DMA) {
+	case DMA1_Stream0_BASE:
+	case DMA1_Stream1_BASE:
+	case DMA1_Stream2_BASE:
+	case DMA1_Stream3_BASE:
+	case DMA1_Stream4_BASE:
+	case DMA1_Stream5_BASE:
+	case DMA1_Stream6_BASE:
+	case DMA1_Stream7_BASE:
+		if (__DMA1_IS_CLK_DISABLED())
+			__DMA1_CLK_ENABLE();
+		break;
+	case DMA2_Stream0_BASE:
+	case DMA2_Stream1_BASE:
+	case DMA2_Stream2_BASE:
+	case DMA2_Stream3_BASE:
+	case DMA2_Stream4_BASE:
+	case DMA2_Stream5_BASE:
+	case DMA2_Stream6_BASE:
+	case DMA2_Stream7_BASE:
+		if (__DMA2_IS_CLK_DISABLED())
+			__DMA2_CLK_ENABLE();
+		break;
+	}
 
 	this->i2c_reset_bus();
 
-	this->hi2c.Instance = I2C1;
+	this->hi2c.Instance = IMU_I2C;
 	this->hi2c.Init.ClockSpeed = 400000;
 	this->hi2c.Init.DutyCycle = I2C_DUTYCYCLE_2;
 	this->hi2c.Init.OwnAddress1 = 0;
@@ -182,8 +274,8 @@ HAL_StatusTypeDef MPU6050::i2c_init() {
 	this->hi2c.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
 	HAL_I2C_Init(&this->hi2c);
 
-	this->hdma_i2c_rx.Instance = DMA1_Stream5;
-	this->hdma_i2c_rx.Init.Channel = DMA_CHANNEL_1;
+	this->hdma_i2c_rx.Instance = IMU_DMA;
+	this->hdma_i2c_rx.Init.Channel = IMU_DMA_CHANNEL;
 	this->hdma_i2c_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
 	this->hdma_i2c_rx.Init.PeriphInc = DMA_PINC_DISABLE;
 	this->hdma_i2c_rx.Init.MemInc = DMA_MINC_ENABLE;
@@ -196,29 +288,174 @@ HAL_StatusTypeDef MPU6050::i2c_init() {
 
 	__HAL_LINKDMA(&this->hi2c, hdmarx, this->hdma_i2c_rx);
 
-	HAL_NVIC_SetPriority(DMA1_Stream5_IRQn, 2, 0);
-	HAL_NVIC_EnableIRQ(DMA1_Stream5_IRQn);
+	switch ((uint32_t)IMU_DMA) {
+	case DMA1_Stream0_BASE:
+		HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+		break;
+	case DMA1_Stream1_BASE:
+		HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
+		break;
+	case DMA1_Stream2_BASE:
+		HAL_NVIC_SetPriority(DMA1_Stream2_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA1_Stream2_IRQn);
+		break;
+	case DMA1_Stream3_BASE:
+		HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA1_Stream3_IRQn);
+		break;
+	case DMA1_Stream4_BASE:
+		HAL_NVIC_SetPriority(DMA1_Stream4_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA1_Stream4_IRQn);
+		break;
+	case DMA1_Stream5_BASE:
+		HAL_NVIC_SetPriority(DMA1_Stream5_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA1_Stream5_IRQn);
+		break;
+	case DMA1_Stream6_BASE:
+		HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
+		break;
+	case DMA1_Stream7_BASE:
+		HAL_NVIC_SetPriority(DMA1_Stream7_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA1_Stream7_IRQn);
+		break;
+	case DMA2_Stream0_BASE:
+		HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+		break;
+	case DMA2_Stream1_BASE:
+		HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
+		break;
+	case DMA2_Stream2_BASE:
+		HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
+		break;
+	case DMA2_Stream3_BASE:
+		HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
+		break;
+	case DMA2_Stream4_BASE:
+		HAL_NVIC_SetPriority(DMA2_Stream4_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA2_Stream4_IRQn);
+		break;
+	case DMA2_Stream5_BASE:
+		HAL_NVIC_SetPriority(DMA2_Stream5_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA2_Stream5_IRQn);
+		break;
+	case DMA2_Stream6_BASE:
+		HAL_NVIC_SetPriority(DMA2_Stream6_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA2_Stream6_IRQn);
+		break;
+	case DMA2_Stream7_BASE:
+		HAL_NVIC_SetPriority(DMA1_Stream7_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(DMA1_Stream7_IRQn);
+		break;
+	}
 
-	HAL_NVIC_SetPriority(I2C1_EV_IRQn, 1, 0);
-	HAL_NVIC_EnableIRQ(I2C1_EV_IRQn);
+	switch ((uint32_t)IMU_I2C) {
+	case I2C1_BASE:
+		HAL_NVIC_SetPriority(I2C1_EV_IRQn, 1, 0);
+		HAL_NVIC_EnableIRQ(I2C1_EV_IRQn);
+		break;
+	case I2C2_BASE:
+		HAL_NVIC_SetPriority(I2C2_EV_IRQn, 1, 0);
+		HAL_NVIC_EnableIRQ(I2C2_EV_IRQn);
+		break;
+	case I2C3_BASE:
+		HAL_NVIC_SetPriority(I2C3_EV_IRQn, 1, 0);
+		HAL_NVIC_EnableIRQ(I2C3_EV_IRQn);
+		break;
+	}
 
 	return HAL_OK;
 }
 
 void MPU6050::int_init() {
-	if (__GPIOB_IS_CLK_DISABLED())
-		__GPIOB_CLK_ENABLE();
+	switch ((uint32_t)IMU_INT_BASE) {
+	case GPIOA_BASE:
+		if (__GPIOA_IS_CLK_DISABLED())
+			__GPIOA_CLK_ENABLE();
+		break;
+	case GPIOB_BASE:
+		if (__GPIOB_IS_CLK_DISABLED())
+			__GPIOB_CLK_ENABLE();
+		break;
+	case GPIOC_BASE:
+		if (__GPIOC_IS_CLK_DISABLED())
+			__GPIOC_CLK_ENABLE();
+		break;
+	case GPIOD_BASE:
+		if (__GPIOD_IS_CLK_DISABLED())
+			__GPIOD_CLK_ENABLE();
+		break;
+	case GPIOE_BASE:
+		if (__GPIOE_IS_CLK_DISABLED())
+			__GPIOE_CLK_ENABLE();
+		break;
+	case GPIOF_BASE:
+		if (__GPIOF_IS_CLK_DISABLED())
+			__GPIOF_CLK_ENABLE();
+		break;
+	case GPIOG_BASE:
+		if (__GPIOG_IS_CLK_DISABLED())
+			__GPIOG_CLK_ENABLE();
+		break;
+	case GPIOH_BASE:
+		if (__GPIOH_IS_CLK_DISABLED())
+			__GPIOH_CLK_ENABLE();
+		break;
+	}
 
 	GPIO_InitTypeDef exti;
 
-	exti.Pin = GPIO_PIN_1;
+	exti.Pin = IMU_INT_PIN;
 	exti.Mode = GPIO_MODE_IT_RISING;
 	exti.Pull = GPIO_NOPULL;
 	exti.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	HAL_GPIO_Init(GPIOB, &exti);
+	HAL_GPIO_Init(IMU_INT_BASE, &exti);
 
-	HAL_NVIC_SetPriority(EXTI1_IRQn, 2, 0);
-	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+	switch (IMU_INT_PIN) {
+	case GPIO_PIN_0:
+		HAL_NVIC_SetPriority(EXTI0_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+		break;
+	case GPIO_PIN_1:
+		HAL_NVIC_SetPriority(EXTI1_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+		break;
+	case GPIO_PIN_2:
+		HAL_NVIC_SetPriority(EXTI2_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+		break;
+	case GPIO_PIN_3:
+		HAL_NVIC_SetPriority(EXTI3_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+		break;
+	case GPIO_PIN_4:
+		HAL_NVIC_SetPriority(EXTI4_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+		break;
+	case GPIO_PIN_5:
+	case GPIO_PIN_6:
+	case GPIO_PIN_7:
+	case GPIO_PIN_8:
+	case GPIO_PIN_9:
+		HAL_NVIC_SetPriority(EXTI9_5_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+		break;
+	case GPIO_PIN_10:
+	case GPIO_PIN_11:
+	case GPIO_PIN_12:
+	case GPIO_PIN_13:
+	case GPIO_PIN_14:
+	case GPIO_PIN_15:
+		HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);
+		HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+		break;
+	}
 }
 
 HAL_StatusTypeDef MPU6050::Init() {
@@ -283,7 +520,7 @@ HAL_StatusTypeDef MPU6050::Init() {
 	if (this->set_accel_fsr(ACCEL_FSR_16))
 		return HAL_ERROR;
 
-	// set low pass filter to 188 Hz (both acc and gyro sample at 1 kHz) TODO
+	// set low pass filter to 188 Hz (both acc and gyro sample at 1 kHz)
 	if (this->set_lpf(LPF_188HZ))
 		return HAL_ERROR;
 
