@@ -537,6 +537,9 @@ HAL_StatusTypeDef MPU6050::Init() {
 }
 
 HAL_StatusTypeDef MPU6050::set_gyro_fsr(gyro_fsr fsr) {
+	if (fsr == GYRO_FSR_NOT_SET)
+		return HAL_ERROR;
+
 	if (this->g_fsr == fsr)
 		return HAL_OK;
 
@@ -556,6 +559,8 @@ HAL_StatusTypeDef MPU6050::set_gyro_fsr(gyro_fsr fsr) {
 		case GYRO_FSR_2000:
 			this->g_mult = 2000;
 			break;
+		case GYRO_FSR_NOT_SET:
+			return HAL_ERROR;
 		}
 
 		this->g_mult /= pow(2, this->ADC_BITS - 1);
@@ -567,6 +572,9 @@ HAL_StatusTypeDef MPU6050::set_gyro_fsr(gyro_fsr fsr) {
 }
 
 HAL_StatusTypeDef MPU6050::set_accel_fsr(accel_fsr fsr) {
+	if (fsr == ACCEL_FSR_NOT_SET)
+		return HAL_ERROR;
+
 	if (this->a_fsr == fsr)
 		return HAL_OK;
 
@@ -586,6 +594,8 @@ HAL_StatusTypeDef MPU6050::set_accel_fsr(accel_fsr fsr) {
 		case ACCEL_FSR_16:
 			this->a_mult = 16;
 			break;
+		case ACCEL_FSR_NOT_SET:
+			return HAL_ERROR;
 		}
 
 		this->a_mult /= pow(2, this->ADC_BITS - 1);
