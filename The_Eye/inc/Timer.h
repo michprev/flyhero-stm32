@@ -21,7 +21,6 @@ public:
 	static void Delay_ms(uint16_t ms);
 	static void Delay_us(uint16_t us);
 	static uint32_t Get_Tick_Count();
-	//static void Start_Task(void (*func)(void), uint16_t period);
 };
 
 } /* namespace flyhero */

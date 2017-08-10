@@ -83,6 +83,8 @@ extern "C" {
 
 		__HAL_TIM_SetCompare(htim5, TIM_CHANNEL_2, __HAL_TIM_GetCounter(htim5) + 1000);
 		__HAL_TIM_ENABLE_IT(htim5, TIM_IT_CC2);
+
+		return HAL_OK;
 	}
 
 	void HAL_ResumeTick(void)
