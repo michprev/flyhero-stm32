@@ -19,8 +19,8 @@ enum Axis { Roll, Pitch, Yaw };
 class Motors_Controller {
 private:
 	Motors_Controller();
-	Motors_Controller(Motors_Controller const&){};
-	Motors_Controller& operator=(Motors_Controller const&){};
+	Motors_Controller(Motors_Controller const&);
+	Motors_Controller& operator=(Motors_Controller const&);
 
 	PID roll_PID, pitch_PID, yaw_PID;
 	/*volatile*/ uint16_t motor_FL, motor_FR, motor_BL, motor_BR;
