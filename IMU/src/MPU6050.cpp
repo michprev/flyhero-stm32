@@ -42,6 +42,7 @@ MPU6050::MPU6050()
 	this->quaternion.q1 = 0;
 	this->quaternion.q2 = 0;
 	this->quaternion.q3 = 0;
+	this->raw_temp = 0;
 	this->mahony_Kp = 2;
 	this->mahony_Ki = 0.1f;
 	this->mahony_integral.x = 0;
