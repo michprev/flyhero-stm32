@@ -102,8 +102,6 @@ void PWM_Generator::Init()
 
 void PWM_Generator::SetPulse(uint16_t ticks, uint8_t channel)
 {
-	TIM_OC_InitTypeDef sConfig;
-
 	if (channel == 1)
 		__HAL_TIM_SET_COMPARE(&this->htim2, TIM_CHANNEL_1, ticks);
 	else if (channel == 2)
