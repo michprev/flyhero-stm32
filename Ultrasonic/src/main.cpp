@@ -12,6 +12,7 @@
 #include "stm32f4xx.h"
 #include "HC_SR04.h"
 #include "Timer.h"
+#include "Config.h"
 
 using namespace flyhero;
 
@@ -22,14 +23,13 @@ int main(void)
 	HAL_Init();
 	initialise_monitor_handles();
 
-	HC_SR04& ultrasonic = HC_SR04::Instance();
-	ultrasonic.Init();
+	US1.Init();
 
 	while (true) {
-		ultrasonic.Start_Measurement();
+		US1.Start_Measurement();
 
 		Timer::Delay_ms(500);
 
-		printf("%f cm\n", ultrasonic.Get_Distance());
+		printf("%f cm\n", US1.Get_Distance());
 	}
 }

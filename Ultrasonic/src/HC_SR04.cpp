@@ -6,17 +6,13 @@
  */
 
 #include <HC_SR04.h>
-#include "Config.h"
 
 namespace flyhero {
 
-HC_SR04& HC_SR04::Instance() {
-	static HC_SR04 instance;
-
-	return instance;
-}
-
-HC_SR04::HC_SR04() {
+HC_SR04::HC_SR04(uint32_t trigg_pin, GPIO_TypeDef *const trigg_base,
+		uint32_t echo_pin, GPIO_TypeDef *const echo_base) :
+			TRIGG_PIN(trigg_pin), TRIGG_BASE(trigg_base),
+			ECHO_PIN(echo_pin), ECHO_BASE(echo_base) {
 	this->running = false;
 	this->state = ECHO_LOW;
 	this->start_ticks = 0;
@@ -25,7 +21,7 @@ HC_SR04::HC_SR04() {
 
 void HC_SR04::Init() {
 	// enable TRIGG GPIO base clock
-	switch ((uint32_t)US_TRIGG_BASE) {
+	switch ((uint32_t)this->TRIGG_BASE) {
 	case GPIOA_BASE:
 		if (__GPIOA_IS_CLK_DISABLED())
 			__GPIOA_CLK_ENABLE();
@@ -61,7 +57,7 @@ void HC_SR04::Init() {
 	}
 
 	// enable ECHO GPIO base clock
-	switch ((uint32_t)US_ECHO_BASE) {
+	switch ((uint32_t)this->ECHO_BASE) {
 	case GPIOA_BASE:
 		if (__GPIOA_IS_CLK_DISABLED())
 			__GPIOA_CLK_ENABLE();
@@ -97,22 +93,22 @@ void HC_SR04::Init() {
 	}
 
 	GPIO_InitTypeDef trigg;
-	trigg.Pin = US_TRIGG_PIN;
+	trigg.Pin = this->TRIGG_PIN;
 	trigg.Mode = GPIO_MODE_OUTPUT_PP;
 	trigg.Speed = GPIO_SPEED_HIGH;
 	trigg.Pull = GPIO_NOPULL;
-	HAL_GPIO_Init(US_TRIGG_BASE, &trigg);
+	HAL_GPIO_Init(this->TRIGG_BASE, &trigg);
 
-	HAL_GPIO_WritePin(US_TRIGG_BASE, US_TRIGG_PIN, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(this->TRIGG_BASE, this->TRIGG_PIN, GPIO_PIN_RESET);
 
 	GPIO_InitTypeDef echo;
-	echo.Pin = US_ECHO_PIN;
+	echo.Pin = this->ECHO_PIN;
 	echo.Mode = GPIO_MODE_IT_RISING_FALLING;
 	echo.Speed = GPIO_SPEED_HIGH;
 	echo.Pull = GPIO_NOPULL;
-	HAL_GPIO_Init(US_ECHO_BASE, &echo);
+	HAL_GPIO_Init(this->ECHO_BASE, &echo);
 
-	switch (US_ECHO_PIN) {
+	switch (this->ECHO_PIN) {
 	case GPIO_PIN_0:
 		HAL_NVIC_SetPriority(EXTI0_IRQn, 1, 0);
 		HAL_NVIC_EnableIRQ(EXTI0_IRQn);
@@ -171,9 +167,9 @@ void HC_SR04::Update_State() {
 }
 
 void HC_SR04::Start_Measurement() {
-	HAL_GPIO_WritePin(US_TRIGG_BASE, US_TRIGG_PIN, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(this->TRIGG_BASE, this->TRIGG_PIN, GPIO_PIN_SET);
 	Timer::Delay_us(10);
-	HAL_GPIO_WritePin(US_TRIGG_BASE, US_TRIGG_PIN, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(this->TRIGG_BASE, this->TRIGG_PIN, GPIO_PIN_RESET);
 }
 
 float HC_SR04::Get_Distance() {
